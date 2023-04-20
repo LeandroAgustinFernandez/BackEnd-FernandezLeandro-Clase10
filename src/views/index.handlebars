@@ -1,0 +1,13 @@
+<section class="products">
+  <h1>Products</h1>
+  <article class="products_list">
+    {{#each products}}
+    <div class="product">
+      <h3>Title: {{this.title}}</h3>
+      <p>Description: {{this.description}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>Price: {{this.price}}</p>
+    </div>
+    {{/each}}
+  </article>
+</section>

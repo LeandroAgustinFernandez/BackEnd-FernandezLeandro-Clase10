@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.link-item{
+    text-decoration: none;
+    font-weight: bold;
+    color: #EEE;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+}
+
+.link-item:hover{
+    color: #FFF;
+    border: 1px solid #FFF;
+}
+
+.products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #EEE;
+    margin-bottom: 2rem;
+}
+
+.products_list {
+    max-width: 500px;
+}
+
+.products h1 {
+    margin: 2rem 0;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+    padding: 10px;
+}
+
+.product .delete_btn {
+    align-self: flex-end;
+    border: none;
+    padding: 10px 15px;
+    background-color: rgb(172, 22, 22);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.product p {
+    margin: .5rem;
+}
+
+.create_form {
+    width: 500px;
+    margin-bottom: 2rem;
+    border: 1px solid #eee;
+}
+
+.create_form div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: .5rem;
+}
+
+.create_form div input,
+.create_form div textarea {
+    width: 300px;
+    padding: 5px;
+}
+
+.create_form input[type="submit"] {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: green;
+    color: #EEE;
+    border: none;
+    cursor: pointer;
+    margin: .5rem;
+}
+
+.create_form input[type="submit"]:hover {
+    background-color: rgb(10, 197, 10);
+}
