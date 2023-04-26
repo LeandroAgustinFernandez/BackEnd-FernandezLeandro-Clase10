@@ -119,16 +119,5 @@
     "code": "CRH22",
     "stock": 25,
     "category": "remeras"
-  },
-  {
-    "id": 13,
-    "status": true,
-    "title": "Camiseta Termica",
-    "description": "Camiseta termica para pasar el invierno calentito",
-    "code": "CRH444",
-    "price": "5000",
-    "stock": "25",
-    "category": "Camisetas",
-    "thumbnails": []
   }
 ]

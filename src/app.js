@@ -3,6 +3,7 @@ import productsRouter from "./routes/products.router.js";
 import viewsRouter from "./routes/view.router.js";
 import handlebars from "express-handlebars";
 import express from "express";
+import cors from 'cors'
 import { __dirname, PORT } from "./utils.js";
 import { Server } from "socket.io";
 
@@ -14,8 +15,9 @@ const app = express();
 const socketio = app.listen(PORT, () =>
   console.log(`Server running at http://localhost:${PORT}`)
 );
-const socketServer = new Server(socketio);
+const io = new Server(socketio);
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
@@ -28,18 +30,10 @@ app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 
-socketServer.on("connection", async (socket) => {
+app.set('socketio',io)
+
+io.on("connection", async (socket) => {
   console.log(`cliente conectado`);
-  const res = await productManager.getProducts();
-
-  socket.emit("products", res);
-  socket.on("add", async (data) => {
-    const res = await productManager.addProduct(data);
-    socket.emit("response", res);
-  });
-  socket.on("delete", async (data) => {
-    const res = await productManager.deleteProduct(parseInt(data));
-    socket.emit("response", res);
-  });
-
+  const productos = await productManager.getProducts();
+  socket.emit("products", productos);
 });

@@ -9,7 +9,7 @@ router.get("/", async (request, response) => {
   response.render("index", { title: "Products", style: "home", products: res });
 });
 
-router.get("/realtimeproducts", (request, response) => {
+router.get("/realtimeproducts", async (request, response) => {
   response.render("realTimeProducts", {
     title: "Real Time Products",
     style: "home",

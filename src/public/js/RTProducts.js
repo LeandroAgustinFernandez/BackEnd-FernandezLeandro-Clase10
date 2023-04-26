@@ -2,10 +2,10 @@ const socket = io();
 const createForm = document.querySelector(".create_form");
 const productsContainer = document.querySelector(".products_list");
 
-socket.on("products", (data) => {
+socket.on("products", (productos) => {
   productsContainer.innerHTML = "";
   const fragment = new DocumentFragment();
-  data.forEach((item) => {
+  productos.forEach((item) => {
     const div = document.createElement("div");
     const h3 = document.createElement("h3");
     const pDescription = document.createElement("p");
@@ -26,24 +26,36 @@ socket.on("products", (data) => {
   productsContainer.appendChild(fragment);
 });
 
-socket.on("response", (data) => {
-  if (data?.success) {
-    alert(data.success);
-    createForm.reset();
-  } else {
-    alert(data.error);
-  }
-});
-
-createForm.addEventListener("submit", (e) => {
+createForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const product = Object.fromEntries(new FormData(e.target));
   product.thumbnails = [];
-  socket.emit("add", product);
+  console.log(product);
+  let res = await fetch("/api/products", {
+    method: "POST",
+    body: JSON.stringify(product),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  let message = await res.json();
+  if (message?.success) {
+    alert(message.success);
+    createForm.reset();
+  } else {
+    alert(message.error);
+  }
 });
 
-productsContainer.addEventListener("click", (e) => {
+productsContainer.addEventListener("click",async (e) => {
   if (e.target.classList.contains("delete_btn")) {
-    socket.emit("delete", e.target.id);
+    let res = await fetch(`/api/products/${e.target.id}`,{method: 'delete'})
+    let message = await res.json();
+    if (message?.success) {
+      alert(message.success);
+      createForm.reset();
+    } else {
+      alert(message.error);
+    }
   }
 });

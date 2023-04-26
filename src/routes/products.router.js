@@ -19,10 +19,20 @@ router.get("/:pid", async (request, response) => {
 });
 
 router.post("/", async (request, response) => {
+  const io = request.app.get("socketio");
   let res = await productManager.addProduct(request.body);
-  res?.error
-    ? response.status(400).send({ ...res })
-    : response.send({ ...res });
+  let res2 = await productManager.getProducts();
+  response.send(res)
+  io.emit('products',res2)
+});
+
+router.delete("/:pid", async (request, response) => {
+  let { pid } = request.params;
+  const io = request.app.get("socketio"); 
+  let res = await productManager.deleteProduct(parseInt(pid));
+  let res2 = await productManager.getProducts();
+  response.send(res)
+  io.emit('products',res2)
 });
 
 router.put("/:pid", async (request, response) => {
@@ -33,12 +43,5 @@ router.put("/:pid", async (request, response) => {
     : response.send({ product: res });
 });
 
-router.delete("/:pid", async (request, response) => {
-  let { pid } = request.params;
-  let res = await productManager.deleteProduct(parseInt(pid));
-  res?.error
-    ? response.status(404).send({ ...res })
-    : response.send({ ...res });
-});
 
 export default router;

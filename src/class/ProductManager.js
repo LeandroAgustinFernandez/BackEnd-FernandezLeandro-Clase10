@@ -6,6 +6,7 @@ export default class ProductManager {
   }
 
   async addProduct(product) {
+    console.log(product);
     let products = await this.getProducts();
     try {
       if (this.#checkMandatoryFields(product))
